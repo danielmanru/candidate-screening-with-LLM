@@ -1,0 +1,6 @@
+.env
+.venv
+cv_screening_db
+.idea
+__pycache__
+data
