@@ -48,14 +48,11 @@ async def upload_file(cv: UploadFile = File(...), project_report: UploadFile = F
         )
 
         new_task = await db["tasks"].insert_one(task_data.model_dump())
-        created = await db["tasks"].find_one(
-            {"_id": new_task.inserted_id},
-            projection={
-                "_id": 1,
-                "status": 1,
-            }
-        )
-        return {"_id": str(created["_id"]), "status": created["status"]}
+
+        return {
+            "_id": str(new_task.inserted_id),
+            "status": task_data.status
+        }
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
